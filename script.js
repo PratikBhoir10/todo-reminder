@@ -1,10 +1,21 @@
 // Initialize
-const showLoader = () => document.getElementById('loader').style.display = 'block';
-const hideLoader = () => document.getElementById('loader').style.display = 'none';
+let loadingTimeout;
+
+const showLoader = () => {
+  loadingTimeout = setTimeout(() => {
+    document.getElementById('loader').style.display = 'block';
+  }, 300);
+};
+
+const hideLoader = () => {
+  clearTimeout(loadingTimeout);
+  document.getElementById('loader').style.display = 'none';
+};
+
 const showError = (msg) => document.getElementById('error-message').textContent = msg;
 const clearError = () => document.getElementById('error-message').textContent = '';
 
-// Add Todo
+// Add Todo with optimized loading
 document.getElementById("add-todo").addEventListener("click", async () => {
   const task = document.getElementById("todo-input").value.trim();
   const time = document.getElementById("reminder-time").value;
@@ -33,10 +44,12 @@ document.getElementById("add-todo").addEventListener("click", async () => {
   }
 });
 
-// Real-time Listener
+// Optimized Real-time Listener
 db.collection("todos")
-  .orderBy("createdAt", "desc")
+  .orderBy("reminderTime", "asc") // Changed from createdAt to reminderTime
+  .limit(50) // Added limit
   .onSnapshot(snapshot => {
+    hideLoader(); // Ensure loader hides
     const todoList = document.getElementById("todo-list");
     todoList.innerHTML = "";
     
@@ -47,7 +60,7 @@ db.collection("todos")
       
       // Highlight overdue tasks
       if (new Date(todo.reminderTime) < new Date()) {
-        li.style.borderLeft = "3px solid var(--danger)";
+        li.classList.add("overdue");
       }
 
       li.innerHTML = `
@@ -55,7 +68,7 @@ db.collection("todos")
           ${todo.text}
           <div class="todo-time">
             <i class="far fa-clock"></i> 
-            ${new Date(todo.reminderTime).toLocaleString()}
+            ${formatFirestoreDate(todo.reminderTime)}
           </div>
         </div>
         <button class="delete-btn" data-id="${doc.id}">
@@ -66,10 +79,34 @@ db.collection("todos")
     });
   });
 
-// Delete Todo
-document.addEventListener("click", (e) => {
+// Better date formatting
+function formatFirestoreDate(timestamp) {
+  const date = new Date(timestamp);
+  const now = new Date();
+  
+  if (date.toDateString() === now.toDateString()) {
+    return `Today ${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+  }
+  
+  return date.toLocaleString([], {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute:'2-digit'
+  });
+}
+
+// Delete Todo with loading state
+document.addEventListener("click", async (e) => {
   if (e.target.closest(".delete-btn")) {
     const id = e.target.closest(".delete-btn").getAttribute("data-id");
-    db.collection("todos").doc(id).delete();
+    showLoader();
+    try {
+      await db.collection("todos").doc(id).delete();
+    } catch (error) {
+      showError('Failed to delete task');
+    } finally {
+      hideLoader();
+    }
   }
 });
