@@ -12,7 +12,7 @@ A simple Firebase-powered todo list with reminder functionality that syncs acros
 - Overdue task highlighting
 - One-click task deletion
 
-## Technologies Used 🛠
+## Technologies Used 
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Backend**: Firebase Firestore (NoSQL database)
 - **Icons**: Font Awesome
