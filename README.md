@@ -1,23 +1,23 @@
 # todo-reminder
-# Todo Reminder App 🔔
+# Todo Reminder App 
 
 A simple Firebase-powered todo list with reminder functionality that syncs across devices in real-time.
 
 ![App Screenshot](https://i.imgur.com/JR5hZOl.png)
 
-## Features ✨
+## Features 
 - Add tasks with reminder timestamps
 - Real-time Firestore synchronization
 - Mobile-friendly responsive design
 - Overdue task highlighting
 - One-click task deletion
 
-## Technologies Used 🛠️
+## Technologies Used 🛠
 - **Frontend**: HTML5, CSS3, JavaScript
 - **Backend**: Firebase Firestore (NoSQL database)
 - **Icons**: Font Awesome
 
-## Setup Instructions 🚀
+## Setup Instructions 
 
 ### 1. Firebase Configuration
 1. Create a project at [Firebase Console](https://console.firebase.google.com/)
