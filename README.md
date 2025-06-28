@@ -2,7 +2,7 @@
 # Todo Reminder App 
 
 A simple Firebase-powered todo list with reminder functionality that syncs across devices in real-time.
-![Live Demo](https://PratikBhoir10.github.io/todo-reminder/)
+[Live Demo](https://PratikBhoir10.github.io/todo-reminder/)
 
 ## Features 
 - Add tasks with reminder timestamps
