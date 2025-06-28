@@ -3,8 +3,6 @@
 
 A simple Firebase-powered todo list with reminder functionality that syncs across devices in real-time.
 
-![App Screenshot](https://i.imgur.com/JR5hZOl.png)
-
 ## Features 
 - Add tasks with reminder timestamps
 - Real-time Firestore synchronization
