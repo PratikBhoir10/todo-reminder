@@ -25,6 +25,6 @@ A simple Firebase-powered todo list with reminder functionality that syncs acros
 
 ### 2. Run Locally
 ```bash
-https://pratikbhoir10.github.io/todo-reminder/
+```bash
+git clone https://github.com/PratikBhoir10/todo-reminder.git
 cd todo-reminder
-# Open index.html in browser
